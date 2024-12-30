@@ -1,0 +1,36 @@
+.Weather-container {
+  text-align: center;
+  background-color: lightskyblue;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.1);
+}
+
+.wearher-info {
+  margin-top: 20px;
+}
+.btn {
+  margin-top: 20px;
+}
+
+button {
+  background-color: yellow;
+  color: black;
+  font-weight: bold;
+}
+
+body {
+  background: linear-gradient(
+    135deg,
+    #ff9a9e,
+    #fad0c4,
+    #fbc2eb,
+    #a18cd1,
+    #fbc2eb,
+    #ff9a9e
+  );
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
