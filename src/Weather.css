@@ -1,36 +1,310 @@
-.Weather-container {
-  text-align: center;
-  background-color: lightskyblue;
-  max-width: 400px;
-  margin: 20px auto;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.1);
-}
-
-.wearher-info {
-  margin-top: 20px;
-}
-.btn {
-  margin-top: 20px;
-}
-
-button {
-  background-color: yellow;
-  color: black;
-  font-weight: bold;
-}
-
+/* Base reset and font */
 body {
-  background: linear-gradient(
-    135deg,
-    #ff9a9e,
-    #fad0c4,
-    #fbc2eb,
-    #a18cd1,
-    #fbc2eb,
-    #ff9a9e
-  );
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  overflow: auto; /* Page scroll allow kar sakte hain, ya hata bhi sakte hain */
+}
+
+/* Light mode body background */
+body.light-mode {
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+  color: #222;
+}
+
+/* Dark mode body background */
+body.dark-mode {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #eee;
+}
+
+/* Container */
+.weather-container {
+  max-height: 90vh; /* Max height 90% viewport height */
+  overflow-y: auto; /* Vertical scroll agar content zyada ho */
+  padding: 40px 50px;
+  border-radius: 15px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.65); /* Dark mode default */
+  color: #eee;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Light mode container */
+.weather-container.light {
+  background-color: rgba(255, 255, 255, 0.85);
+  color: #222;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode container */
+.weather-container.dark {
+  background-color: rgba(0, 0, 0, 0.65);
+  color: #eee;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Scrollbar styling (modern browsers) */
+.weather-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.weather-container::-webkit-scrollbar-thumb {
+  background-color: rgba(102, 126, 234, 0.7);
+  border-radius: 4px;
+}
+
+.weather-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin: 0;
+}
+
+/* Mode toggle button */
+.mode-toggle-btn {
+  background: transparent;
+  border: 2px solid currentColor;
+  color: inherit;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;
+}
+
+/* Mode toggle button */
+.mode-toggle-btn {
+  background: transparent;
+  border: 2px solid currentColor;
+  color: inherit;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;
+}
+
+/* Light mode hover */
+body.light-mode .mode-toggle-btn:hover {
+  background-color: lightskyblue; /* white se halki grey */
+  color: #222; /* dark text */
+}
+
+/* Dark mode hover */
+body.dark-mode .mode-toggle-btn:hover {
+  background-color: white;
+  color: #222; /* aap chahte the white text, lekin white background par black text zyada readable hota hai */
+  /* Agar aapko white text chahiye to yeh line change karen: color: #fff; */
+}
+
+/* Input group */
+.input-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.city-input {
+  flex: 1;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: inherit;
+  color: inherit;
+}
+
+.city-input::placeholder {
+  color: #999;
+}
+
+.city-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 8px #667eea;
+}
+
+/* Button */
+.btn {
+  background-color: #667eea;
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.btn:hover:not(:disabled) {
+  background-color: #5563c1;
+}
+
+.btn:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+/* Error message */
+.error-message {
+  color: #ff6b6b;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* Weather info */
+.weather-info h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.weather-main {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.weather-icon {
+  width: 120px;
+  height: 120px;
+  filter: drop-shadow(0 0 5px rgba(0,0,0,0.3));
+}
+
+.weather-details p {
+  margin: 6px 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* Fade-in animation for weather info */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .weather-container {
+    padding: 30px 20px;
+  }
+
+  .weather-main {
+    flex-direction: column;
+  }
+
+  .weather-icon {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px rgba(0,0,0,0.3));
+  }
+  50% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 15px rgba(102, 126, 234, 0.8));
+  }
+}
+
+.weather-icon {
+  animation: pulse 3s infinite ease-in-out;
+}
+
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.weather-info {
+  animation: slideFadeIn 0.8s ease forwards;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+body.light-mode {
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb, #89f7fe, #66a6ff);
   background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
+  animation: gradientShift 13s ease infinite;
+}
+
+body.dark-mode {
+  background: linear-gradient(135deg, #667eea, #764ba2, #6a11cb, #2575fc);
+  background-size: 400% 400%;
+  animation: gradientShift 13s ease infinite;
+}
+
+.city-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 12px 3px #667eea88;
+  transition: box-shadow 0.3s ease;
 }
