@@ -108,15 +108,14 @@ body.dark-mode {
 
 /* Light mode hover */
 body.light-mode .mode-toggle-btn:hover {
-  background-color: lightskyblue; /* white se halki grey */
-  color: #222; /* dark text */
+  background-color: lightskyblue; 
+  color: #222; 
 }
 
 /* Dark mode hover */
 body.dark-mode .mode-toggle-btn:hover {
   background-color: white;
-  color: #222; /* aap chahte the white text, lekin white background par black text zyada readable hota hai */
-  /* Agar aapko white text chahiye to yeh line change karen: color: #fff; */
+  color: #222; 
 }
 
 /* Input group */
